@@ -69,6 +69,22 @@ input::-webkit-inner-spin-button {
     font-size: 0.75em;
 }
 
+.cart-amount div{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.cart-amount div label{
+    font-size: 2em;
+    margin: 0 3px;
+}
+
+.cart-amount div label:hover{
+    cursor: pointer;
+}
+
 .cart-total{
     display: flex;
     flex-direction: column;

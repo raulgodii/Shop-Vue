@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="styles/product.css">
     <link rel="stylesheet" href="styles/detail.css">
     <link rel="stylesheet" href="styles/cart.css">
+    <link rel="stylesheet" href="styles/indentify.css">
     <script src="https://kit.fontawesome.com/8fd2dbd2a5.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="script/script.js"></script>
@@ -20,7 +21,7 @@
     <div class="alert">
         <p>🎄 HOLIDAY SHIPPING: Orders from Dec 14 onward, choose FEDEX CONNECT PLUS or DHL for timely delivery. 🎄</p>
     </div>
-    <header v-model="header">        
+    <header>        
         <div>
             <label for="checkboxMenu">
                 <i class="header-icon header-icon-menu fa-solid fa-bars"></i>
@@ -41,7 +42,7 @@
         <div>
             <i class="header-icon fa-solid fa-magnifying-glass"></i>
             <a href="#" @click="showCartF()"><i class="header-icon fa-solid fa-cart-shopping"></i></a>
-            <a href="identify.html"><i class="header-icon fa-solid fa-user"></i></a>
+            <a href="#" @click="showIdentify()"><i class="header-icon fa-solid fa-user"></i></a>
         </div>
     </header>
     <main> 
@@ -122,9 +123,24 @@
                   </div>
             </section>
         </div>
-        
 
+        <section class="loader" v-if="loader">
+            <div class="loader-container">
+                <div class="loader-cube">
+                  <div class="loader-side front"></div>
+                  <div class="loader-side back"></div>
+                  <div class="loader-side left"></div>
+                  <div class="loader-side right"></div>
+                  <div class="loader-side top"></div>
+                  <div class="loader-side bottom"></div>
+                </div>
+              </div>              
+        </section>
+        
+        
         <section class="products" v-if="showProducts">
+            
+
             <article class="product" v-for="product in products" :key="product.id">
                 <div class="product-img">
                     <a href="#" @click="showProductDetail(product)"><img :src="product.image" :alt="product.title"></a>
@@ -175,7 +191,12 @@
                     </td>
                     <td>
                         <div class="cart-amount">
-                            <input type="number" :value="product.quantity">
+                            <div>
+                                <label @click="decreaseQuantity(product)">-</label>
+                                <input type="number" :value="product.quantity">
+                                <label @click="incrementeQuantity(product)">+</label>
+                            </div>
+                            
                             <a href="#" @click="deleteProduct(product)">Remove</a>
                         </div>
                     </td>
@@ -186,15 +207,44 @@
             <div class="cart-total">
                 <div class="subtotal">
                     <p>Subtotal</p>
-                    <p>134.99€</p>
+                    <p>{{ subTotal }}€</p>
                 </div>
                 <div class="total">
                     <p>Total</p>
-                    <p>134.99€</p>
+                    <p>{{ subTotal }}€</p>
                 </div>
                 <p class="cart-total-taxes">Taxes and shipping calculated at checkout</p>
                 <button>Checkout</button>
             </div>
+        </section>
+
+        <section class="indentify" v-if="showIndentify">
+            <form class="form">
+                <span class="signup">Log in</span>
+                <input type="email" placeholder="Email address" class="form--input">
+                <input type="password" placeholder="Password" class="form--input">
+                
+                <button class="form--submit">
+                    Log in
+                </button>
+            </form>
+
+            <form class="form">
+                <span class="signup">Sign Up</span>
+                <input type="email" placeholder="Email address" class="form--input">
+                <input type="password" placeholder="Password" class="form--input">
+                <input type="password" placeholder="Confirm password" class="form--input">
+                
+                <div class="form--marketing">
+                    <input id="okayToEmail" type="checkbox">
+                    <label for="okayToEmail" class="checkbox">
+                      I want to join the newsletter
+                    </label>
+                </div>
+                <button class="form--submit">
+                    Sign up
+                </button>
+            </form>
         </section>
     </main>
 
@@ -251,7 +301,11 @@
                 showProducts: false,
                 showDetail: false,
                 showCart: false,
-                cart: []
+                showIndentify: false,
+                cart: [],
+                subTotal: 0,
+                loader: false
+
             };
         },
         mounted() {
@@ -264,15 +318,29 @@
                 .then(json=>this.categories = json)
             },
             showProductsFromCategory(category){
+                this.showProducts = false;
+                this.showDetail = false;
+                this.showCart = false;
                 this.showIndex = false;
-                this.showProducts = true;
-                fetch('https://fakestoreapi.com/products/category/'+category)
-                .then(res=>res.json())
-                .then(json=>this.products = json)
+                this.showIndentify = false;
+                this.loader = true;
+
+                fetch('https://fakestoreapi.com/products/category/' + category)
+                .then(res => res.json())
+                .then(json => {
+                    this.products = json;
+                })
+                .finally(() => {
+                    this.loader = false;
+                    this.showProducts = true;
+                });
             },
             showProductDetail(product){
                 this.showProducts = false;
                 this.showDetail = true;
+                this.showCart = false;
+                this.showIndex = false;
+                this.showIndentify = false;
                 this.product = product;
             },
             addToCart(product){
@@ -283,15 +351,39 @@
                     product.quantity = 1;
                     this.cart.push(product);
                 }
+
+                this.updateSubTotal();
             },
             showCartF(){
                 this.showProducts = false;
                 this.showDetail = false;
-                this.showIndex = false;
                 this.showCart = true;
+                this.showIndex = false;
+                this.showIndentify = false;
             },
             deleteProduct(product){
                 this.cart = this.cart.filter(p => p.id != product.id);
+                this.updateSubTotal();
+            },
+            updateSubTotal(){
+                this.subTotal = this.cart.reduce((acumulador, product) => acumulador + (product.price*product.quantity), 0);
+            },
+            showIdentify(){
+                this.showProducts = false;
+                this.showDetail = false;
+                this.showCart = false;
+                this.showIndex = false;
+                this.showIndentify = true;
+            },
+            incrementeQuantity(product){
+                pEdit = this.cart.find(p => p.id == product.id);
+                pEdit.quantity++;
+                this.updateSubTotal();
+            },
+            decreaseQuantity(product){
+                pEdit = this.cart.find(p => p.id == product.id);
+                pEdit.quantity--;
+                this.updateSubTotal();
             }
         },
         });
