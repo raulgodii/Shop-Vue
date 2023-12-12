@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power Dinasty</title>
+    <link rel="stylesheet" href="styles/global.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/flickity/1.0.0/flickity.css">
+    <link rel="stylesheet" href="styles/slider.css">
+    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="styles/footer.css">
+    <link rel="stylesheet" href="styles/product.css">
+    <link rel="stylesheet" href="styles/detail.css">
+    <link rel="stylesheet" href="styles/cart.css">
+    <script src="https://kit.fontawesome.com/8fd2dbd2a5.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="script/script.js"></script>
+</head>
+<body id="app">
+    <div class="alert">
+        <p>🎄 HOLIDAY SHIPPING: Orders from Dec 14 onward, choose FEDEX CONNECT PLUS or DHL for timely delivery. 🎄</p>
+    </div>
+    <header v-model="header">        
+        <div>
+            <label for="checkboxMenu">
+                <i class="header-icon header-icon-menu fa-solid fa-bars"></i>
+            </label>
+            <input style="display: none;" type="checkbox" id="checkboxMenu">
+
+            <nav class="header-nav">
+                <ul>
+                    <li v-for="categorie in categories" :key="categorie"><a href="#" @click="showProductsFromCategory(categorie)">{{categorie}}</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div>
+            <a href="index.html"><img class="header-logo" src="assets/logo.png" alt="PowerDinasty"></a>
+        </div>
+
+        <div>
+            <i class="header-icon fa-solid fa-magnifying-glass"></i>
+            <a href="#" @click="showCartF()"><i class="header-icon fa-solid fa-cart-shopping"></i></a>
+            <a href="identify.html"><i class="header-icon fa-solid fa-user"></i></a>
+        </div>
+    </header>
+    <main> 
+        <div v-if="showIndex">
+            <section class="slider">
+                <div class="gallery js-flickity" data-flickity-options='{ "wrapAround": true }'>
+                    <div class="gallery-cell c1" style="background-image: url(assets/1.png);"></div>
+                    <div class="gallery-cell c2" style="background-image: url(assets/2.png);"></div>
+                    <div class="gallery-cell c3" style="background-image: url(assets/3.png);"></div>
+                    <div class="gallery-cell c4" style="background-image: url(assets/4.png);"></div>
+                    <div class="gallery-cell c5" style="background-image: url(assets/5.png);"></div>
+                </div>
+            </section>
+    
+            <section class="banner">
+                <img src="assets/banner.png" alt="banner">
+            </section>
+    
+            
+            <section class="followUs">
+    
+                <h2>Follow Us</h2>
+    
+                <div class="followUsContainer">
+                    <div class="followUs-img">
+                        <img src="assets/followus1.webp" alt="followUs">
+                        <img src="assets/followus2.jpg" alt="followUs">
+                        <img src="assets/followus3.webp" alt="followUs">
+                    </div>
+        
+                    <div class="followUs-content">
+                        <p>Stay ahead of the power game! Follow us for exclusive insights, epic lifts, and unbeatable offers. Join the <b>#PowerliftingTribe</b> and dominate your journey to strength! 💪🔥 <b>#FollowTheStrength</b></p>
+                        <div class="followUs-content-icons">
+                            <i class="fa-brands fa-instagram"></i>
+                            <i class="fa-brands fa-youtube"></i>
+                            <i class="fa-brands fa-tiktok"></i>
+                            <i class="fa-brands fa-x-twitter"></i>
+                        </div>
+                    </div>
+                </div>
+                
+            </section>
+            
+            <section class="services">
+                <div class="services-item">
+                    <i class="fa-solid fa-headphones"></i>
+                    <h4>CUSTOMER SERVICE</h4>
+                    <p>Available M-F, 8:30am to 4:30pm (MST)</p>
+                </div>
+    
+                <div class="services-item">
+                    <i class="fa-solid fa-box"></i>
+                    <h4>FREE SHIPPING ON ORDERS $150+</h4>
+                    <p>Free US Domestic Shipping when you spend $150 or more!</p>
+                </div>
+    
+                <div class="services-item">
+                    <i class="fa-regular fa-face-smile"></i>
+                    <h4>EASY RETURNS</h4>
+                    <p>Buy with confidence and enjoy painless, hassle-free returns!</p>
+                </div>
+    
+                <div class="services-item">
+                    <i class="fa-solid fa-lock"></i>
+                    <h4>SECURE PAYMENT</h4>
+                    <p>Shop safely and securely knowing your experience is protected.</p>
+                </div>
+            </section>
+    
+            <section class="newsletter">
+                <div class="newsletter-form">
+                    <h5 class="heading"> Subscribe to Our Newsletter</h5>
+                    <form class="form">
+                      <label for="email">Email:</label>
+                      <input required="" placeholder="Enter your email address" name="email" id="email" type="email">
+                      <input value="Subscribe" type="submit">
+                    </form>
+                  </div>
+            </section>
+        </div>
+        
+
+        <section class="products" v-if="showProducts">
+            <article class="product" v-for="product in products" :key="product.id">
+                <div class="product-img">
+                    <a href="#" @click="showProductDetail(product)"><img :src="product.image" :alt="product.title"></a>
+                    <button @click="addToCart(product)">+ ADD</button>
+                </div>
+                <a class="product-info" href="#" @click="showProductDetail(product)">
+                    <p class="product-info-description">{{ product.title }}</p>
+                    <p class="product-info-rate">{{ product.rating.rate }}<span>★</span></p>
+                </a>
+                <div class="product-price">
+                    <p>{{ product.price }}€</p>
+                </div>
+            </article>
+        </section>
+
+        <section class="detail" v-if="showDetail">
+            <div class="detail-p1">
+                <img class="img-principal" :src="product.image" :alt="product.title">
+            </div>
+
+            <div class="detail-p2">
+                <h4>{{ product.title }}</h4>
+                <ul>
+                    <li>{{ product.description }}</li>
+                </ul>
+                <p class="detail-p1-price">{{ product.price }}€</p>
+                <button @click="addToCart(product)">Add to the cart</button>
+            </div>
+           
+        </section>
+
+        <section class="cart" v-if="showCart">
+            <table>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+                <tr v-for="product in cart" :key="product.id">
+                    <td>
+                        <div class="cart-product">
+                            <img :src="product.image" alt="">
+                            <div class="cart-product-info">
+                                <p class="cart-product-info-description">{{ product.title }}</p>
+                                <p class="cart-product-info-price">{{ product.price }}€</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="cart-amount">
+                            <input type="number" :value="product.quantity">
+                            <a href="#" @click="deleteProduct(product)">Remove</a>
+                        </div>
+                    </td>
+                    <td>{{ product.price * product.quantity }}€</td>
+                </tr>
+            </table>
+
+            <div class="cart-total">
+                <div class="subtotal">
+                    <p>Subtotal</p>
+                    <p>134.99€</p>
+                </div>
+                <div class="total">
+                    <p>Total</p>
+                    <p>134.99€</p>
+                </div>
+                <p class="cart-total-taxes">Taxes and shipping calculated at checkout</p>
+                <button>Checkout</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-item">
+            <h4>Help</h4>
+            <a href="#">Lorem Ipsum</a>
+            <a href="#">Lorem Ipsum</a>
+            <a href="#">Lorem Ipsum</a>
+            <a href="#">Lorem Ipsum</a>
+        </div>
+        <div class="footer-item">
+            <h4>About Us</h4>
+            <a href="#">Lorem Ipsum</a>
+            <a href="#">Lorem Ipsum</a>
+            <a href="#">Lorem Ipsum</a>
+            <a href="#">Lorem Ipsum</a>
+        </div>
+        <div class="footer-item">
+            <h4>Legal</h4>
+            <a href="#">Lorem Ipsum</a>
+            <a href="#">Lorem Ipsum</a>
+            <a href="#">Lorem Ipsum</a>
+            <a href="#">Lorem Ipsum</a>
+        </div>
+        <div class="footer-cta">
+            <div class="footer-payments">
+                <h4>Payments Methods</h4>
+                <div class="footer-payments-methods">
+                    <i class="fa-solid fa-credit-card"></i>
+                    <i class="fa-brands fa-cc-mastercard"></i>
+                    <i class="fa-brands fa-cc-paypal"></i>
+                </div>
+            </div>
+            <div class="footer-payments-icons">
+                <i class="fa-brands fa-instagram"></i>
+                <i class="fa-brands fa-youtube"></i>
+                <i class="fa-brands fa-tiktok"></i>
+                <i class="fa-brands fa-x-twitter"></i>
+            </div>
+        </div>
+    </footer>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/flickity/1.0.0/flickity.pkgd.js"></script>
+
+    <script>
+        const app = Vue.createApp({
+        data() {
+            return {
+                categories: [],
+                products: [],
+                product: '',
+                showIndex: true,
+                showProducts: false,
+                showDetail: false,
+                showCart: false,
+                cart: []
+            };
+        },
+        mounted() {
+            this.getAllCategories();
+        },
+        methods: {
+            getAllCategories(){
+                fetch('https://fakestoreapi.com/products/categories')
+                .then(res=>res.json())
+                .then(json=>this.categories = json)
+            },
+            showProductsFromCategory(category){
+                this.showIndex = false;
+                this.showProducts = true;
+                fetch('https://fakestoreapi.com/products/category/'+category)
+                .then(res=>res.json())
+                .then(json=>this.products = json)
+            },
+            showProductDetail(product){
+                this.showProducts = false;
+                this.showDetail = true;
+                this.product = product;
+            },
+            addToCart(product){
+                
+                if(pEdit = this.cart.find(p => p.id == product.id)){
+                    pEdit.quantity++;
+                } else {
+                    product.quantity = 1;
+                    this.cart.push(product);
+                }
+            },
+            showCartF(){
+                this.showProducts = false;
+                this.showDetail = false;
+                this.showIndex = false;
+                this.showCart = true;
+            },
+            deleteProduct(product){
+                this.cart = this.cart.filter(p => p.id != product.id);
+            }
+        },
+        });
+
+        app.mount('#app');
+
+    </script>
+</body>
+</html>

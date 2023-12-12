@@ -1,0 +1,168 @@
+.banner{
+    margin: 40px 0;
+}
+
+.banner img{
+    width: 100%;
+}
+
+.followUs{
+    padding: 20px 10%;
+}
+
+.followUs h2{
+    margin: 20px 0;
+}
+
+.followUsContainer{
+    display: grid;
+    grid-template-columns: 50% auto;
+    grid-template-rows: 50vh;
+    gap: 5%;
+}
+
+.followUs-img{
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+.followUs-img img{
+    max-width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.3s;
+}
+
+.followUs-img img:hover{
+    transform: scale(1.02);
+}
+
+.followUs-content{
+    display: grid;
+    grid-template-rows: 80% auto;
+}
+
+.followUs-content-icons{
+    width: 100%;
+    text-align: center;
+    margin: 10px;
+}
+
+.followUs-content-icons i{
+    font-size: 2em;
+    margin: 0 10px;
+    transition: 0.3s;
+}
+
+.followUs-content-icons i:hover{
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.followUs-content p{
+    text-align: justify;
+    line-height: 200%;
+}
+
+.services{
+    margin: 30px 0;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    background-color: rgb(237, 237, 237);
+    padding: 20px 5%;
+    gap: 50px;
+}
+
+.services-item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    transition: 0.3s;
+}
+
+.services-item:hover {
+    transform: scale(1.1);
+}
+
+.services-item i{
+    font-size: 2em;
+}
+
+.services-item p{
+    color: grey;
+}
+
+/* Unique styles for the newsletter form */
+.newsletter-form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 2px solid #333;
+  border-radius: 8px;
+  background-color: #f7f7f7;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+
+.heading {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.newsletter-form h2 {
+  margin-top: 0;
+  color: #333;
+  font-size: 24px;
+}
+
+.newsletter-form label {
+  display: block;
+  font-weight: bold;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.newsletter-form input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.newsletter-form input[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #000000;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.newsletter-form input[type="submit"]:hover {
+  background-color: #383838;
+}
+
+.newsletter{
+    margin: 50px 0;
+}
+
+@media only screen and (max-width: 850px) {
+    .services{
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media only screen and (max-width: 650px) {
+    .followUsContainer{
+        grid-template-columns: 1fr;
+    }
+
+    .services{
+        grid-template-columns: 1fr;
+    }
+}

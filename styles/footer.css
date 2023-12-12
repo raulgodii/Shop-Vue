@@ -1,0 +1,90 @@
+footer{
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    padding: 20px 5%;
+    background-color: black;
+    color: white;
+}
+
+footer h4{
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.footer-item a{
+    display: block;
+    color: rgb(205, 205, 205);
+    text-decoration: none;
+    margin-bottom: 5px;
+    transition: 0.3s;
+}
+
+.footer-item a:hover{
+    color: grey;
+    transform: scale(1.05);
+}
+
+.footer-cta{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    align-items: center;
+}
+
+.footer-cta i{
+    transition: 0.3s;
+}
+
+.footer-cta i:hover{
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.footer-payments-methods i{
+    font-size: 1.5em;
+}
+
+.footer-payments-methods{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+}
+
+.footer-payments-icons i{
+    margin: 0 5px;
+}
+
+@media only screen and (max-width: 850px) {
+    footer{
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .footer-item{
+        margin: 20px 5px;
+    }
+
+    .footer-item, .footer-payments{
+        font-size: 0.8em;
+    }
+
+    .footer-cta{
+        align-items: flex-start;
+    }
+}
+
+@media only screen and (max-width: 650px) {
+    footer{
+        grid-template-columns: 1fr;
+    }
+
+    .footer-item{
+        text-align: center;
+    }
+
+    .footer-cta{
+        text-align: center;
+        align-items: center;
+    }
+}

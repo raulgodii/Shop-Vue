@@ -1,0 +1,120 @@
+.cart{
+    display: grid;
+    padding: 20px 5%;
+    grid-template-columns: 70% auto;
+    gap: 50px;
+}
+
+.cart-product img{
+    height: 70px;
+    object-fit: cover;
+    transition: 0.3s;
+}
+
+.cart-product img:hover{
+    transform: scale(1.1);
+}
+
+.cart table{
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.cart table th{
+    border-bottom: 2px solid rgb(177, 177, 177);
+}
+
+.cart table th, .cart table td{
+    padding: 10px;
+}
+
+.cart table input{
+    width: 40px;
+    height: 30px;
+    display: block;
+}
+
+.cart input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+  text-align: center;
+  border: 2px solid black;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.cart-product{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 5px;
+    align-items: center;
+}
+
+.cart-product-info-description{
+    color: black;
+    font-weight: bold;
+}
+
+.cart-product-info-price{
+    color: grey;
+}
+
+.cart-amount a{
+    color: grey;
+    font-size: 0.75em;
+}
+
+.cart-total{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    padding: 40px;
+    border: 1px solid grey;
+    gap: 10px;
+}
+
+.total, .subtotal{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.cart-total button{
+    width: 100%;
+    padding: 5px 0;
+    color: white;
+    background-color: black;
+    transition: 0.3s;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    margin-top: 40px;
+}
+
+.cart-total button:hover{
+    cursor: pointer;
+    background-color: rgb(84, 84, 84);
+}
+
+.cart-total-taxes{
+    font-size: 0.8em;
+    color: grey;
+}
+
+@media only screen and (max-width: 1200px) {
+    .cart{
+        grid-template-columns: 60% auto;
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    .cart{
+        grid-template-columns: auto;
+    }
+}
