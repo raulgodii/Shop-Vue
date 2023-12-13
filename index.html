@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Power Dinasty</title>
+    <title>Shop</title>
     <link rel="stylesheet" href="styles/global.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/flickity/1.0.0/flickity.css">
     <link rel="stylesheet" href="styles/slider.css">
@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="styles/indentify.css">
     <script src="https://kit.fontawesome.com/8fd2dbd2a5.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="script/script.js"></script>
 </head>
 <body id="app">
     <div class="alert">
@@ -68,13 +67,13 @@
     
                 <div class="followUsContainer">
                     <div class="followUs-img">
-                        <img src="assets/followus1.webp" alt="followUs">
-                        <img src="assets/followus2.jpg" alt="followUs">
-                        <img src="assets/followus3.webp" alt="followUs">
+                        <img src="assets/followus1.jpeg" alt="followUs">
+                        <img src="assets/followus2.jpeg" alt="followUs">
+                        <img src="assets/followus3.jpeg" alt="followUs">
                     </div>
         
                     <div class="followUs-content">
-                        <p>Stay ahead of the power game! Follow us for exclusive insights, epic lifts, and unbeatable offers. Join the <b>#PowerliftingTribe</b> and dominate your journey to strength! 💪🔥 <b>#FollowTheStrength</b></p>
+                        <p>Lead the style game! Connect with us for exclusive trends, fabulous looks, and irresistible deals. Join the <b>#StyleSquad</b> and dominate your journey to fashion! 👗🔥 <b>#FollowTheStyle</b></p>
                         <div class="followUs-content-icons">
                             <i class="fa-brands fa-instagram"></i>
                             <i class="fa-brands fa-youtube"></i>
@@ -139,21 +138,33 @@
         
         
         <section class="products" v-if="showProducts">
-            
+            <div class="order">
+                <label for="order">Order by:</label>
+                <select id="order" v-model="selectedOption">
+                    <option value="none" selected>None</option>
+                    <option value="priceAsc">Price (Asc)</option>
+                    <option value="priceDesc">Price (Desc)</option>
+                    <option value="nameAsc">Name (Asc)</option>
+                    <option value="nameDesc">Desc (Desc)</option>
+                </select>   
+            </div> 
 
-            <article class="product" v-for="product in products" :key="product.id">
-                <div class="product-img">
-                    <a href="#" @click="showProductDetail(product)"><img :src="product.image" :alt="product.title"></a>
-                    <button @click="addToCart(product)">+ ADD</button>
-                </div>
-                <a class="product-info" href="#" @click="showProductDetail(product)">
-                    <p class="product-info-description">{{ product.title }}</p>
-                    <p class="product-info-rate">{{ product.rating.rate }}<span>★</span></p>
-                </a>
-                <div class="product-price">
-                    <p>{{ product.price }}€</p>
-                </div>
-            </article>
+            <div class="productsDiv">
+                <article class="product" v-for="product in sortedProducts" :key="product.id">
+                    <div class="product-img">
+                        <a href="#" @click="showProductDetail(product)"><img :src="product.image" :alt="product.title"></a>
+                        <button @click="addToCart(product)">+ ADD</button>
+                    </div>
+                    <a class="product-info" href="#" @click="showProductDetail(product)">
+                        <p class="product-info-description">{{ product.title }}</p>
+                        <p class="product-info-rate">{{ product.rating.rate }}<span>★</span></p>
+                    </a>
+                    <div class="product-price">
+                        <p>{{ product.price }}€</p>
+                    </div>
+                </article>
+            </div>
+            
         </section>
 
         <section class="detail" v-if="showDetail">
@@ -219,7 +230,7 @@
         </section>
 
         <section class="indentify" v-if="showIndentify">
-            <form class="form">
+            <form class="formIndentify">
                 <span class="signup">Log in</span>
                 <input type="email" placeholder="Email address" class="form--input">
                 <input type="password" placeholder="Password" class="form--input">
@@ -304,8 +315,8 @@
                 showIndentify: false,
                 cart: [],
                 subTotal: 0,
-                loader: false
-
+                loader: false,
+                selectedOption: 'none'
             };
         },
         mounted() {
@@ -402,6 +413,28 @@
                 localStorage.setItem("cart", JSON.stringify(this.cart) );
             }
         },
+        computed: {
+            sortedProducts(){
+                switch (this.selectedOption) {
+                    case 'none':
+                        return this.products;
+                    break;
+                    case 'priceAsc':
+                        return this.products.slice().sort((p1, p2) => p1.price - p2.price);
+                    break;
+                    case 'nameAsc':
+                    return this.products.slice().sort((p1, p2) => p1.title.localeCompare(p2.title));
+                    break;
+                    case 'priceDesc':
+                        return this.products.slice().sort((p1, p2) => p2.price - p1.price);
+                    break;
+                    case 'nameDesc':
+                        return this.products.slice().sort((p1, p2) => p2.title.localeCompare(p1.title));
+                    break;
+                    break;
+                }
+            }
+        }
         });
 
         app.mount('#app');
