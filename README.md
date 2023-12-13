@@ -1,10 +1,9 @@
-# Power Dinasty
-> Welcome to your favorite Powerlifting Products Shop! This is your one-stop destination for high-quality powerlifting gear and accessories.
+# Shop with Vue
+> Welcome to your favorite Online Shopping Destination! This is your ultimate destination for a diverse range of high-quality products and accessories.
 
-> Project based in only HTML & CSS design.
+> Code in VUE, using JS, HTML & CSS Design.
 
-![image](https://github.com/raulgodii/Shop/assets/102313699/33501ebf-0999-4490-8f0b-828e26757e5b)
-
+![banner](https://github.com/raulgodii/Shop-Vue/assets/102313699/4927f8c2-6d49-4112-8435-b9fa2fb669fc)
 
 
 ## Table of Contents
